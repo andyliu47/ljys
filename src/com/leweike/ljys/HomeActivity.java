@@ -1,7 +1,5 @@
 package com.leweike.ljys;
 
-import java.util.List;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.leweike.ljys.entity.UserInfo;
 
 /**
  * 项目: ljys
@@ -23,7 +19,6 @@ public class HomeActivity extends BaseActivity {
 
 	private ListView listView;
 	private BaseAdapter adapter;
-	private List<UserInfo> userInfos;
 	private int count = 30;
 	
 	@Override
