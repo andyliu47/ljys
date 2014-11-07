@@ -1,56 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" >
-
-        <include layout="@layout/header" />
-    </LinearLayout>
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        android:layout_marginTop="40dp"
         android:orientation="vertical" >
 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#efefef"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" >
+			<!-- 团队名称 -->
+            <TextView
+                android:id="@+id/home_team_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:hint="@string/app_name"
+                android:textColor="#000000"
+                android:textSize="25sp" />
+			<!-- 切换团队 -->
+            <ImageView
+                android:id="@+id/home_change_team"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:contentDescription="@string/miss_image"
+                android:src="@drawable/more" />
+        </RelativeLayout>
+		<!-- 消息状态 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_bottom"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:gravity="center_vertical|center_horizontal" >
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" >
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:drawableBottom="@drawable/tab_select"
-                android:text="@string/app_name" />
+                android:background="@drawable/home_tab_select"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/app_name"
+                android:textColor="#ffffff" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:drawableBottom="@drawable/tab_select"
-                android:text="@string/app_name" />
+                android:background="@drawable/home_tab"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/app_name"
+                android:textColor="#157efb" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:drawableBottom="@drawable/tab_select"
-                android:text="@string/app_name" />
+                android:background="@drawable/home_tab"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/app_name"
+                android:textColor="#157efb" />
         </LinearLayout>
 
         <ListView
-            android:id="@+id/home_list_view"
+            android:id="@+id/home_listview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
         </ListView>

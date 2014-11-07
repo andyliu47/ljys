@@ -7,11 +7,14 @@
 	<string name="login">登 录</string>
 	<string name="back">返回</string>
 	<string name="register">注 册</string>
-	<string name="input_tip_username">请输入用户名</string>
-	<string name="input_tip_password">请输入密码</string>
-	<string name="input_tip_verificationcode">请输入验证码</string>
+	<string name="complete">完成</string>
+	<string name="login_tip_username">\t手机号</string>
+	<string name="login_tip_password">\t密码</string>
+	<string name="register_tip_password">\t6位以上密码</string>
+	<string name="input_tip_verificationcode">\t验证码</string>
 	<string name="forget_password">忘记密码？</string>
 	<string name="verification_code">获取验证码</string>
 	<string name="miss_image">获取图片失败</string>
+	<string name="agreement">我已同意《邻家医生服务协议》</string>
     
 </resources>
