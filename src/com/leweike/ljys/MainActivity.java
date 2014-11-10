@@ -78,5 +78,6 @@ public class MainActivity extends BaseActivity {
 		Intent intent = new Intent(this, HomeActivity.class);
 		intent.putExtra("type", type);
 		startActivity(intent);
+		this.finish(); 
 	}
 }
