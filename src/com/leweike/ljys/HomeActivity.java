@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,6 +19,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -45,6 +47,11 @@ public class HomeActivity extends BaseActivity {
 	private Animation operatingAnim;
 	private int pageIndex = 1;
 	private boolean isloading;
+	
+	//footer
+	private ImageButton messageButton;
+	private ImageButton patientButton;
+	private ImageButton settingButton;
 
 	private OnItemClickListener itemClickListener = new OnItemClickListener() {
 
@@ -179,5 +186,22 @@ public class HomeActivity extends BaseActivity {
 		}
 
 	};
+	
+	private void initFooter(){
+		messageButton = (ImageButton) findViewById(R.id.home_footer_message_btn);
+		patientButton = (ImageButton) findViewById(R.id.home_footer_patient_btn);
+		settingButton = (ImageButton) findViewById(R.id.home_footer_setting_btn);
+		
+		messageButton.setOnClickListener(footerListener);
+		patientButton.setOnClickListener(footerListener);
+		settingButton.setOnClickListener(footerListener);
+	}
 
+	private OnClickListener footerListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			
+		}
+	};
 }

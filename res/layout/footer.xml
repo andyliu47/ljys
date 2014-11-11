@@ -6,6 +6,7 @@
     android:orientation="horizontal" >
 
     <ImageButton
+        android:id="@+id/home_footer_message_btn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_weight="1"
@@ -14,6 +15,7 @@
         android:src="@drawable/message" />
 
     <ImageButton
+        android:id="@+id/home_footer_patient_btn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_weight="1"
@@ -22,6 +24,7 @@
         android:src="@drawable/patient" />
 
     <ImageButton
+        android:id="@+id/home_footer_setting_btn"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_weight="1"

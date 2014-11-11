@@ -11,6 +11,8 @@ import android.view.WindowManager;
  * @author
  */
 public class BaseActivity extends Activity {
+	
+	
 	protected void fullScreen(){
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
