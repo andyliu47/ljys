@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:hint="@string/app_name"
+                android:hint="张强团队"
                 android:textColor="#000000"
                 android:textSize="25sp" />
             <!-- 切换团队 -->
@@ -64,6 +64,7 @@
             android:paddingRight="5dp" >
 
             <TextView
+                android:id="@+id/home_message_status_1"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginLeft="5dp"
@@ -71,29 +72,32 @@
                 android:layout_weight="1"
                 android:background="@drawable/home_tab_select"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="@string/app_name"
+                android:text="待跟进"
+                android:clickable="true"
                 android:textColor="#ffffff" />
 
             <TextView
+                android:id="@+id/home_message_status_2"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/home_tab"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="@string/app_name"
+                android:text="已回复"
+                android:clickable="true"
                 android:textColor="#157efb" />
 
             <TextView
+                android:id="@+id/home_message_status_3"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/home_tab"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="@string/app_name"
+                android:text="已结束"
+                android:clickable="true"
                 android:textColor="#157efb" />
         </LinearLayout>
 
