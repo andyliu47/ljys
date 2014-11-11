@@ -5,11 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,10 +15,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.leweike.ljys.utils.QiniuUploadUtils;
-import com.leweike.ljys.utils.UploadCallback;
 import com.leweike.ljys.utils.UploadMediaThread;
-import com.qiniu.android.http.ResponseInfo;
 
 /**
  * 项目: ljys 描述: 创建日期: 2014-11-4 上午11:45:02

@@ -43,17 +43,13 @@ public class HomeActivity extends BaseActivity {
 	private List<MessageVo> allList = new ArrayList<MessageVo>();
 
 	private ListView listView;
-	//private ImageView listViewFooter;
 	private BaseAdapter adapter;
-	private ImageView homeLoading;
-	//private Animation operatingAnim;
-	private AnimationSet animationSet;
-	private int pageIndex = 1;
-	private int currentType = 1;
-	private boolean isloading;
+	private ImageView homeLoading; //changestatus loading
+	private AnimationSet animationSet; // loading rotate
+	private int pageIndex = 1; //message page
+	private int currentType = 1; // status type
+	private boolean isloading; // loading data?
 	private AsyncTask<String, Integer, String> asyncTask;
-	
-	
 
 	// footer
 	private ImageButton messageButton;
@@ -72,12 +68,13 @@ public class HomeActivity extends BaseActivity {
 		@Override
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
 			switch (scrollState) {
-			case OnScrollListener.SCROLL_STATE_IDLE:
+			case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
 				if (view.getLastVisiblePosition() == view.getCount() - 1) {
 					if (!isloading) {
 						isloading = true;
 						pageIndex++;
-						new HomeAsyncTask().execute(String.valueOf(1));
+						asyncTask = new HomeAsyncTask();
+						asyncTask.execute(String.valueOf(1));
 					}
 				}
 				break;
@@ -99,21 +96,17 @@ public class HomeActivity extends BaseActivity {
 		setContentView(R.layout.home);
 
 		listView = (ListView) findViewById(R.id.home_listview);
-		//listViewFooter = (ImageView) findViewById(R.id.home_listview_loading);
 		animationSet = rotateAnimation();
 		homeLoading = (ImageView) findViewById(R.id.home_loading);
-		/*operatingAnim = AnimationUtils.loadAnimation(this, R.animator.home_loading);
-		LinearInterpolator lin = new LinearInterpolator();
-		operatingAnim.setInterpolator(lin);*/
-		
-		
+
 		initChangeStatus();
 		initFooter();
 		initPopWindow();
-		
-		
+
 	}
-	TextView status1,status2,status3;
+
+	TextView status1, status2, status3;
+
 	private void initChangeStatus() {
 		status1 = (TextView) findViewById(R.id.home_message_status_1);
 		status2 = (TextView) findViewById(R.id.home_message_status_2);
@@ -122,19 +115,20 @@ public class HomeActivity extends BaseActivity {
 		status1.setOnClickListener(changeStatusListener);
 		status2.setOnClickListener(changeStatusListener);
 		status3.setOnClickListener(changeStatusListener);
-		
+
 		changeStatus(1);
 	}
 
-	private void changeStatus(int type){
-		designateList.clear();
-		myList.clear();
-		allList.clear();
+	private void changeStatus(int type) {
 		currentType = type;
 		pageIndex = 1;
 		if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING) {
 			asyncTask.cancel(true);
 		}
+		designateList.clear();
+		myList.clear();
+		allList.clear();
+		
 		asyncTask = new HomeAsyncTask();
 		asyncTask.execute(String.valueOf(1));
 		if (type == 1) {
@@ -144,14 +138,14 @@ public class HomeActivity extends BaseActivity {
 			status2.setBackgroundColor(getResources().getColor(R.color.gray));
 			status3.setTextColor(getResources().getColor(R.color.blue));
 			status3.setBackgroundColor(getResources().getColor(R.color.gray));
-		}else if (type == 2) {
+		} else if (type == 2) {
 			status2.setTextColor(getResources().getColor(R.color.white));
 			status2.setBackgroundResource(R.drawable.home_tab_select);
 			status1.setTextColor(getResources().getColor(R.color.blue));
 			status1.setBackgroundColor(getResources().getColor(R.color.gray));
 			status3.setTextColor(getResources().getColor(R.color.blue));
 			status3.setBackgroundColor(getResources().getColor(R.color.gray));
-		}else if (type == 3) {
+		} else if (type == 3) {
 			status3.setTextColor(getResources().getColor(R.color.white));
 			status3.setBackgroundResource(R.drawable.home_tab_select);
 			status1.setTextColor(getResources().getColor(R.color.blue));
@@ -160,8 +154,7 @@ public class HomeActivity extends BaseActivity {
 			status2.setBackgroundColor(getResources().getColor(R.color.gray));
 		}
 	}
-	
-	
+
 	private OnClickListener changeStatusListener = new OnClickListener() {
 
 		@Override
@@ -229,7 +222,7 @@ public class HomeActivity extends BaseActivity {
 		return list;
 	}
 
-	private AnimationSet rotateAnimation(){
+	private AnimationSet rotateAnimation() {
 		AnimationSet animationSet = new AnimationSet(true);
 		RotateAnimation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 		rotateAnimation.setDuration(500);
@@ -238,7 +231,7 @@ public class HomeActivity extends BaseActivity {
 		animationSet.addAnimation(rotateAnimation);
 		return animationSet;
 	}
-	
+
 	class HomeAsyncTask extends AsyncTask<String, Integer, String> {
 
 		@Override
@@ -246,7 +239,7 @@ public class HomeActivity extends BaseActivity {
 			super.onPreExecute();
 			if (pageIndex == 1) {
 				homeLoading.startAnimation(animationSet);
-				adapter = new StatusChangeAdapter(HomeActivity.this, currentType,currentType == 1 ? designateList : null, myList, allList);
+				adapter = new StatusChangeAdapter(HomeActivity.this, currentType, currentType == 1 ? designateList : null, myList, allList);
 				listView.setAdapter(adapter);
 			} else {
 				ImageView imageView = (ImageView) listView.findViewById(R.id.home_listview_loading);
@@ -256,13 +249,9 @@ public class HomeActivity extends BaseActivity {
 
 		@Override
 		protected String doInBackground(String... params) {
-			try {
-				Thread.sleep(3000L);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			/*designateList.addAll(getData(1));
-			myList.addAll(getData(2));*/
+			/*
+			 * designateList.addAll(getData(1)); myList.addAll(getData(2));
+			 */
 			allList.addAll(getData(3));
 			return null;
 		}
@@ -278,7 +267,6 @@ public class HomeActivity extends BaseActivity {
 				listView.setOnScrollListener(scrollListener);
 			} else {
 				isloading = false;
-				//listViewFooter.clearAnimation();
 			}
 			adapter.notifyDataSetChanged();
 		}

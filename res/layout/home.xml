@@ -4,14 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <!-- loading -->
+
     <ImageView
         android:id="@+id/home_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/loading"
-        android:contentDescription="@string/miss_image"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/miss_image"
+        android:src="@drawable/loading" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -71,9 +73,9 @@
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_tab_select"
+                android:clickable="true"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="待跟进"
-                android:clickable="true"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -83,9 +85,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="已回复"
-                android:clickable="true"
                 android:textColor="#157efb" />
 
             <TextView
@@ -95,9 +97,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="已结束"
-                android:clickable="true"
                 android:textColor="#157efb" />
         </LinearLayout>
 
@@ -107,13 +109,15 @@
             android:layout_height="wrap_content"
             android:visibility="gone" >
         </ListView>
-        <ImageView 
+
+        <ImageView
             android:id="@+id/home_list_next_loading"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:src="@drawable/loading"
+            android:layout_marginBottom="50dp"
             android:contentDescription="@string/miss_image"
-            android:visibility="gone"/>
+            android:src="@drawable/loading"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
