@@ -44,9 +44,9 @@ public class HomeActivity extends BaseActivity {
 
 	private ListView listView;
 	private BaseAdapter adapter;
-	private ImageView homeLoading; //changestatus loading
+	private ImageView homeLoading; // changestatus loading
 	private AnimationSet animationSet; // loading rotate
-	private int pageIndex = 1; //message page
+	private int pageIndex = 1; // message page
 	private int currentType = 1; // status type
 	private boolean isloading; // loading data?
 	private AsyncTask<String, Integer, String> asyncTask;
@@ -128,7 +128,7 @@ public class HomeActivity extends BaseActivity {
 		designateList.clear();
 		myList.clear();
 		allList.clear();
-		
+
 		asyncTask = new HomeAsyncTask();
 		asyncTask.execute(String.valueOf(1));
 		if (type == 1) {
@@ -235,6 +235,8 @@ public class HomeActivity extends BaseActivity {
 
 	class HomeAsyncTask extends AsyncTask<String, Integer, String> {
 
+		private ImageView listviewLoading;
+		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -243,8 +245,11 @@ public class HomeActivity extends BaseActivity {
 				adapter = new StatusChangeAdapter(HomeActivity.this, currentType, currentType == 1 ? designateList : null, myList, allList);
 				listView.setAdapter(adapter);
 			} else {
-				ImageView imageView = (ImageView) listView.findViewById(R.id.home_listview_loading);
-				imageView.startAnimation(animationSet);
+				listviewLoading = (ImageView) listView.findViewById(R.id.home_listview_loading);
+				if (!listviewLoading.isShown()) {
+					listviewLoading.setVisibility(View.VISIBLE);
+				}
+				listviewLoading.startAnimation(animationSet);
 			}
 		}
 
@@ -268,6 +273,10 @@ public class HomeActivity extends BaseActivity {
 				listView.setOnScrollListener(scrollListener);
 			} else {
 				isloading = false;
+				if (listviewLoading.isShown()) {
+					listviewLoading.setVisibility(View.GONE);
+				}
+				listviewLoading.clearAnimation();
 			}
 			adapter.notifyDataSetChanged();
 		}
