@@ -227,7 +227,8 @@ public class HomeActivity extends BaseActivity {
 		RotateAnimation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 		rotateAnimation.setDuration(500);
 		rotateAnimation.setRepeatCount(-1);
-		rotateAnimation.setInterpolator(new LinearInterpolator());
+		LinearInterpolator li = new LinearInterpolator();
+		rotateAnimation.setInterpolator(li);
 		animationSet.addAnimation(rotateAnimation);
 		return animationSet;
 	}
