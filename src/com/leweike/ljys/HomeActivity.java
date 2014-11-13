@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -67,20 +68,17 @@ public class HomeActivity extends BaseActivity {
 
 		@Override
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
-			switch (scrollState) {
-			case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-				if (view.getLastVisiblePosition() == view.getCount() - 1) {
-					if (!isloading) {
-						isloading = true;
-						pageIndex++;
-						asyncTask = new HomeAsyncTask();
-						asyncTask.execute(String.valueOf(1));
+			if (view.getLastVisiblePosition() == view.getCount() - 1) {
+				if (!isloading) {
+					synchronized (this) {
+						if (!isloading) {
+							isloading = true;
+							pageIndex++;
+							asyncTask = new HomeAsyncTask();
+							asyncTask.execute(String.valueOf(1));
+						}
 					}
 				}
-				break;
-
-			default:
-				break;
 			}
 		}
 
@@ -98,7 +96,7 @@ public class HomeActivity extends BaseActivity {
 		listView = (ListView) findViewById(R.id.home_listview);
 		animationSet = rotateAnimation();
 		homeLoading = (ImageView) findViewById(R.id.home_loading);
-
+		
 		initChangeStatus();
 		initFooter();
 		initPopWindow();
@@ -119,18 +117,23 @@ public class HomeActivity extends BaseActivity {
 		changeStatus(1);
 	}
 
+	private Object synchronizedObject = new Object();
 	private void changeStatus(int type) {
 		currentType = type;
 		pageIndex = 1;
-		if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING) {
-			asyncTask.cancel(true);
+		synchronized (synchronizedObject) {
+			if (asyncTask != null && asyncTask.getStatus() == AsyncTask.Status.RUNNING) {
+				asyncTask.cancel(true);
+			}
+			designateList.clear();
+			myList.clear();
+			allList.clear();
+			
+			asyncTask = new HomeAsyncTask();
+			asyncTask.execute(String.valueOf(1));
 		}
-		designateList.clear();
-		myList.clear();
-		allList.clear();
-
-		asyncTask = new HomeAsyncTask();
-		asyncTask.execute(String.valueOf(1));
+		
+		
 		if (type == 1) {
 			status1.setTextColor(getResources().getColor(R.color.white));
 			status1.setBackgroundResource(R.drawable.home_tab_select);
@@ -208,10 +211,10 @@ public class HomeActivity extends BaseActivity {
 		});
 	}
 
-	private List<MessageVo> getData(int type) {
+	private List<MessageVo> getData(int type,int count) {
 		List<MessageVo> list = new ArrayList<MessageVo>();
 		MessageVo messageVo;
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < count; i++) {
 			messageVo = new MessageVo();
 			messageVo.setContent(((pageIndex - 1) * 10 + i) + "内容内容内容内容内容内容内容内容内容内容内容");
 			messageVo.setCountMsg(1);
@@ -224,7 +227,7 @@ public class HomeActivity extends BaseActivity {
 
 	private AnimationSet rotateAnimation() {
 		AnimationSet animationSet = new AnimationSet(true);
-		RotateAnimation rotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		RotateAnimation rotateAnimation = new RotateAnimation(0, -359, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 		rotateAnimation.setDuration(500);
 		rotateAnimation.setRepeatCount(-1);
 		LinearInterpolator li = new LinearInterpolator();
@@ -235,8 +238,6 @@ public class HomeActivity extends BaseActivity {
 
 	class HomeAsyncTask extends AsyncTask<String, Integer, String> {
 
-		private ImageView listviewLoading;
-		
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -245,11 +246,7 @@ public class HomeActivity extends BaseActivity {
 				adapter = new StatusChangeAdapter(HomeActivity.this, currentType, currentType == 1 ? designateList : null, myList, allList);
 				listView.setAdapter(adapter);
 			} else {
-				listviewLoading = (ImageView) listView.findViewById(R.id.home_listview_loading);
-				if (!listviewLoading.isShown()) {
-					listviewLoading.setVisibility(View.VISIBLE);
-				}
-				listviewLoading.startAnimation(animationSet);
+				
 			}
 		}
 
@@ -258,7 +255,16 @@ public class HomeActivity extends BaseActivity {
 			/*
 			 * designateList.addAll(getData(1)); myList.addAll(getData(2));
 			 */
-			allList.addAll(getData(3));
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if (pageIndex == 1) {
+				allList.addAll(getData(3,10));
+			}else {
+				allList.addAll(getData(3,9));
+			}
 			return null;
 		}
 
@@ -273,12 +279,13 @@ public class HomeActivity extends BaseActivity {
 				listView.setOnScrollListener(scrollListener);
 			} else {
 				isloading = false;
-				if (listviewLoading.isShown()) {
-					listviewLoading.setVisibility(View.GONE);
-				}
-				listviewLoading.clearAnimation();
 			}
 			adapter.notifyDataSetChanged();
+		}
+
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
 		}
 
 	};
@@ -316,4 +323,10 @@ public class HomeActivity extends BaseActivity {
 		callbackAblumOrCamera(requestCode, data);
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return super.onTouchEvent(event);
+	}
+
+	
 }

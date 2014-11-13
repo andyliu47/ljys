@@ -7,7 +7,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.leweike.ljys.R;
@@ -21,6 +26,7 @@ public class StatusChangeAdapter extends BaseAdapter {
 	private List<MessageVo> allList;
 	private View view;
 	private int type;
+	private AnimationSet animationSet;
 
 	private int count, designateHeader, designateStart, designateEnd, myHeader, myStart, myEnd, allHeader, allStart, allEnd;
 
@@ -31,9 +37,21 @@ public class StatusChangeAdapter extends BaseAdapter {
 		this.designateList = designateList;
 		this.myList = myList;
 		this.allList = allList;
+		animationSet = rotateAnimation();
 		calculateLoaction();
 	}
 
+	private AnimationSet rotateAnimation() {
+		AnimationSet animationSet = new AnimationSet(true);
+		RotateAnimation rotateAnimation = new RotateAnimation(0, -359, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		rotateAnimation.setDuration(500);
+		rotateAnimation.setRepeatCount(-1);
+		LinearInterpolator li = new LinearInterpolator();
+		rotateAnimation.setInterpolator(li);
+		animationSet.addAnimation(rotateAnimation);
+		return animationSet;
+	}
+	
 	public void calculateLoaction() {
 		if (designateList == null || designateList.size() == 0) {
 			designateHeader = designateStart = designateEnd = myHeader = 0;
@@ -125,7 +143,9 @@ public class StatusChangeAdapter extends BaseAdapter {
 			messageVo = allList.get(position - allStart);
 		} else if (type == 7){
 			view = layoutInflater.inflate(R.layout.home_listview_loading, null);
-			return view;
+			ImageView footer = (ImageView) view.findViewById(R.id.home_listview_loading);
+			footer.startAnimation(animationSet);
+			return view; 
 		}
 		view = layoutInflater.inflate(R.layout.home_list, null);
 		TextView time = (TextView) view.findViewById(R.id.home_list_time);
